@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Bash(node:*)",
+      "Bash(find /d/Code/ClaudeWorkspace/Cosb -type f -name .env*)",
+      "Bash(cd:*)",
+      "Bash(npm *)",
+      "Bash(taskkill /f /im node.exe 2)",
+      "Bash(/dev/null sleep:*)",
+      "Bash(findstr \":3000\")"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+dist/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Vault local de desarrollo
+vault-data/
+vault/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts
+dist/
+build/
+
+# Obsidian
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/workspaces.json
+.trash/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/

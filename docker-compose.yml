@@ -1,0 +1,49 @@
+services:
+  api:
+    build: ./backend
+    container_name: obsidian-claude-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - APP_USERNAME=${APP_USERNAME}
+      - APP_PASSWORD=${APP_PASSWORD}
+      - VAULT_PATH=/vault
+      - PORT=3000
+    volumes:
+      - vault-data:/vault
+    networks:
+      - obsidian-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: obsidian-syncthing
+    restart: unless-stopped
+    ports:
+      - "8384:8384"
+      - "22000:22000"
+      - "21027:21027/udp"
+    volumes:
+      - vault-data:/vault
+      - syncthing-config:/var/syncthing/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - obsidian-network
+
+volumes:
+  vault-data:
+  syncthing-config:
+
+networks:
+  obsidian-network:

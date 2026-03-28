@@ -88,51 +88,49 @@ backend/
 
 #### Semana 1: Cimientos
 
-- [ ] Init proyecto TypeScript (tsconfig strict, ESM, paths)
-- [ ] Express server con middlewares base: CORS, helmet, morgan, body-parser
-- [ ] `config/env.ts`: carga y valida variables de entorno con Zod
-- [ ] `utils/logger.ts`: logger estructurado (pino o winston)
-- [ ] JWT auth:
-  - [ ] `POST /api/auth/login` — valida credencial única, devuelve JWT (7d)
-  - [ ] `middleware/auth.ts` — verifica token en cabecera Authorization
-- [ ] `vault.service.ts`:
-  - [ ] `createFile(path, content)` — escribe archivo en vault
-  - [ ] `readFile(path)` — lee archivo
-  - [ ] `listFolder(folder)` — lista archivos de una carpeta
-  - [ ] `getStructure()` — árbol completo del vault
-  - [ ] Sanitización de rutas: prevenir path traversal
-- [ ] `.env.example` con todas las variables necesarias
-- [ ] `middleware/errorHandler.ts`: manejador de errores centralizado
+- [x] Init proyecto TypeScript (tsconfig strict, ESM, paths)
+- [x] Express server con middlewares base: CORS, helmet, morgan, body-parser
+- [x] `config/env.ts`: carga y valida variables de entorno
+- [x] `utils/logger.ts`: logger estructurado con niveles
+- [x] JWT auth:
+  - [x] `POST /api/auth/login` — valida credencial única, devuelve JWT (7d)
+  - [x] `middleware/auth.ts` — verifica token en cabecera Authorization
+- [x] `vault.service.ts`:
+  - [x] `writeNote(folder, filename, content)` — escribe archivo en vault
+  - [x] `readNote(filepath)` — lee archivo
+  - [x] `listStructure()` — árbol completo del vault
+  - [x] Sanitización de rutas: prevenir path traversal
+- [x] `.env.example` con todas las variables necesarias
+- [x] `middleware/errorHandler.ts`: manejador de errores centralizado
+- [x] Agentes IA: NoteFormatter, VaultSearch, RAG, ConversationSaver, Journal, TagSuggester
+- [x] Orquestadores: createNote, chat, saveConversation
+- [x] `Dockerfile` multi-stage (build → production)
+- [x] `.dockerignore`
 
-**Entregable S1**: servidor arranca, login devuelve JWT, operaciones básicas de vault funcionan.
+**Entregable S1**: ✅ servidor arranca, login devuelve JWT, operaciones básicas de vault funcionan.
 
 ---
 
 #### Semana 2: Crear notas y buscar
 
-- [ ] `claude.service.ts`:
-  - [ ] `formatNote(rawText, type)` — envía a Claude, devuelve markdown formateado
-  - [ ] `askWithContext(question, context)` — consulta con contexto del vault
-  - [ ] Configuración de model, max_tokens, system prompt
-- [ ] `template.service.ts`:
-  - [ ] Plantillas por tipo: `idea`, `journal`, `note`, `conversation`
-  - [ ] Generación de frontmatter YAML (fecha, tags, source, type)
-- [ ] `POST /api/note/create`:
-  - [ ] Recibe `{ content, folder, filename? }`
-  - [ ] Claude formatea el texto
-  - [ ] Genera frontmatter automático
-  - [ ] Guarda en vault con nombre `YYYY-MM-DD-slug.md`
-  - [ ] Responde `{ success, path, content }`
-- [ ] `GET /api/vault/structure`: devuelve árbol de carpetas y archivos
-- [ ] `search.service.ts`:
-  - [ ] Wrapper de ripgrep: `search(query, vaultPath)`
-  - [ ] Parseo de salida JSON de ripgrep
-  - [ ] Extracción de contexto (±3 líneas)
-- [ ] `POST /api/search`:
-  - [ ] Recibe `{ query }`
-  - [ ] Devuelve `{ results: [{ file, matches, context }] }`
+- [x] `template.service.ts`:
+  - [x] Plantillas por tipo: `idea`, `journal`, `note`, `conversation`
+  - [x] Generación de frontmatter YAML (fecha, tags, source, type)
+- [x] `POST /api/note/create`:
+  - [x] Recibe `{ content, folder, type? }`
+  - [x] Claude formatea el texto vía NoteFormatterAgent
+  - [x] Genera frontmatter automático
+  - [x] Guarda en vault con nombre `YYYY-MM-DD-slug.md`
+  - [x] Responde `{ success, path, filename, title }`
+- [x] `GET /api/vault/structure`: devuelve árbol de carpetas y archivos
+- [x] `POST /api/search`:
+  - [x] Búsqueda con ripgrep (producción) + fallback Node.js (dev Windows)
+  - [x] Recibe `{ query }`
+  - [x] Devuelve `{ results: [{ file, snippet, line }] }`
+- [x] `docker-compose.yml`: stack completo API + Syncthing + volúmenes compartidos
+- [x] `.gitignore` en raíz del proyecto
 
-**Entregable S2**: se puede crear una nota desde curl y aparece en el vault. La búsqueda devuelve resultados reales.
+**Entregable S2**: ✅ búsqueda devuelve resultados reales. Endpoints `/note/create` y `/search` verificados.
 
 ---
 
@@ -522,4 +520,4 @@ mobile/
 
 ---
 
-*Última actualización: 2026-03-27*
+*Última actualización: 2026-03-28*

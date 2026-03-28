@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "Run the doc-maintainer agent. Review what files were modified in this session using git status and git diff, then update ROADMAP.md, CLAUDE.md (only if architecture changed), and .claude/agents/antonio.md to reflect the current state of the project. Follow the process described in .claude/agents/doc-maintainer.md.",
+            "statusMessage": "Actualizando documentación del proyecto...",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
